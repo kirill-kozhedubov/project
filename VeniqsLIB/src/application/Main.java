@@ -18,10 +18,9 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			// primaryStage.setOnCloseRequest(value);
-			/*
-			 * primaryStage.setScene(scene); primaryStage.setTitle("VeniqsLIB");
-			 * primaryStage.show();
-			 */
+/*			primaryStage.setScene(scene);
+			primaryStage.setTitle("VeniqsLIB");
+			primaryStage.show();*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

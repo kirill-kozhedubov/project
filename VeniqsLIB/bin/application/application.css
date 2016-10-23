@@ -1,1 +1,11 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.loginPaneBG {
+    -fx-background-color: #CCFF99;
+}
+
+.error {
+ -fx-font-weight: bold;
+ -fx-text-fill: red;
+ -fx-font-family: Arial;
+ }
