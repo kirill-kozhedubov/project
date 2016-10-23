@@ -11,18 +11,17 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = LoginPanel.INSTANCE;
-			
-			
-			Scene scene = new Scene(root, 400, 400);
+			primaryStage = LoginPanel.INSTANCE;
+			BorderPane root = LoginPanel.INSTANCE.getRoot();
+
+			Scene scene = LoginPanel.INSTANCE.getMyScene();
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
-			
-			
-			//primaryStage.setOnCloseRequest(value);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("VeniqsLIB");
-			primaryStage.show();
+
+			// primaryStage.setOnCloseRequest(value);
+			/*
+			 * primaryStage.setScene(scene); primaryStage.setTitle("VeniqsLIB");
+			 * primaryStage.show();
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

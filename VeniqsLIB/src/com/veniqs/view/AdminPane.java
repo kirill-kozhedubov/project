@@ -1,8 +1,9 @@
 package com.veniqs.view;
 
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-public class AdminPane extends BorderPane {
+public class AdminPane extends Stage {
 
 	private static volatile AdminPane instance;
 
@@ -20,7 +21,8 @@ public class AdminPane extends BorderPane {
 	}
 
 	private AdminPane() {
-
+		this.setTitle("xd");
+		this.show();
 	}
 
 }
