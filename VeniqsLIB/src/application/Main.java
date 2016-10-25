@@ -12,15 +12,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			primaryStage = LoginPanel.INSTANCE;
-			BorderPane root = LoginPanel.INSTANCE.getRoot();
+			LoginPanel.INSTANCE.getMyScene().getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
-			Scene scene = LoginPanel.INSTANCE.getMyScene();
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
-			// primaryStage.setOnCloseRequest(value);
-/*			primaryStage.setScene(scene);
-			primaryStage.setTitle("VeniqsLIB");
-			primaryStage.show();*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

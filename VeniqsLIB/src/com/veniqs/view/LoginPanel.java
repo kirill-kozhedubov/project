@@ -39,43 +39,41 @@ public class LoginPanel extends Stage {
 
 		// button
 		Button signInButton = new Button("Sign in");
-		SignInButtonHandler signInButtonHandler = new SignInButtonHandler(loginTextField, passwordTextField, errorLabel);
+		signInButton.setPrefWidth(Double.POSITIVE_INFINITY);
+		signInButton.getStyleClass().add("signin");
+		SignInButtonHandler signInButtonHandler = new SignInButtonHandler(loginTextField, passwordTextField,
+				errorLabel);
 		signInButton.setOnAction(signInButtonHandler);
-		
-		
+
 		// last preparing
 		VBox signInBox = new VBox(loginBox, passwordBox, signInButton, errorBox);
 		signInBox.setPadding(new Insets(20));
 		signInBox.setSpacing(10);
+
 		root.setCenter(signInBox);
 
 		scene = new Scene(root, 200, 200);
+		this.setResizable(false);
 		this.setScene(scene);
 		this.setTitle("Login panel");
 		this.show();
 	}
 
-
-
-	public BorderPane getRoot() {
-		return root;
-	}
-
 	public Scene getMyScene() {
 		return scene;
 	}
-	
+
 	private PasswordField passwordFieldBuilder() {
 		PasswordField pf = new PasswordField();
-		pf.setMinWidth(80);
-		pf.setMaxWidth(150);
+		pf.setMinWidth(100);
+		pf.setPrefWidth(Double.POSITIVE_INFINITY);
 		return pf;
 	}
-	
+
 	private TextField textFieldBuilder() {
 		TextField tf = new TextField();
-		tf.setMinWidth(80);
-		tf.setMaxWidth(150);
+		tf.setMinWidth(100);
+		tf.setPrefWidth(Double.POSITIVE_INFINITY);
 		return tf;
 	}
 
