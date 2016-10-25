@@ -1,5 +1,6 @@
 package application;
 
+import com.veniqs.model.Database;
 import com.veniqs.view.LoginPanel;
 
 import javafx.application.Application;
@@ -13,7 +14,7 @@ public class Main extends Application {
 		try {
 			primaryStage = LoginPanel.INSTANCE;
 			LoginPanel.INSTANCE.getMyScene().getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
