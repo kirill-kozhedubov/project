@@ -29,21 +29,19 @@ public class SignInButtonHandler implements EventHandler<ActionEvent> {
 		getLoginStatus(username, password);
 	}
 
-	private boolean getLoginStatus(String username, String password) {
-		// !TODO check for right login information
-		trueIfAdmin(username, password); // !TODO check for admin
-		// !TODO get login status from db
-		if (!logOnFlag) {
-			popError();
+	private void getLoginStatus(String username, String password) {
+		
+	}
+	
+	private boolean regularLoginCheck() {
+		
+		return false;
 		}
-		return logOnFlag;
-	}
-
-	private boolean trueIfAdmin(String username, String password) {
-		// !TODO check if password and login is from admin acc
-		logOnAsAdminFlag = false;
-		return logOnAsAdminFlag;
-	}
+	
+	private boolean loginAsAdminCheck() {
+		
+		return false;
+		}
 
 	private void popError() {
 		errorLabel.setText("Failed to sign in");
