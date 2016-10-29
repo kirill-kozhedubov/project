@@ -30,16 +30,27 @@ public class SignInButtonHandler implements EventHandler<ActionEvent> {
 	}
 
 	private void getLoginStatus(String username, String password) {
-		
+		if (regularLoginCheck(username, password)) {
+			if (loginAsAdminCheck(username, password)) {
+				System.out.println("login as admin successful");
+			}
+			else {
+				System.out.println("login as user successful");
+			}
+		}
+		else {
+			popError();
+		}
 	}
 	
-	private boolean regularLoginCheck() {
+	private boolean regularLoginCheck(String username, String password) {
 		
 		return false;
 		}
 	
-	private boolean loginAsAdminCheck() {
-		
+	private boolean loginAsAdminCheck(String username, String password) {
+		// SELECT PASSWORD FROM LIBRARIANS WHERE LOGIN=ADMIN
+		// AND CHECK IF PASSWORD FOR ADMIN IS RIGHT
 		return false;
 		}
 
