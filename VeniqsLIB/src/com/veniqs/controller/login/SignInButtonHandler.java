@@ -1,5 +1,7 @@
 package com.veniqs.controller.login;
 
+import com.veniqs.model.Librarian;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -33,26 +35,32 @@ public class SignInButtonHandler implements EventHandler<ActionEvent> {
 		if (regularLoginCheck(username, password)) {
 			if (loginAsAdminCheck(username, password)) {
 				System.out.println("login as admin successful");
-			}
-			else {
+			} else {
 				System.out.println("login as user successful");
 			}
-		}
-		else {
+		} else {
 			popError();
 		}
 	}
-	
+
 	private boolean regularLoginCheck(String username, String password) {
-		
+
 		return false;
-		}
-	
+	}
+
 	private boolean loginAsAdminCheck(String username, String password) {
-		// SELECT PASSWORD FROM LIBRARIANS WHERE LOGIN=ADMIN
-		// AND CHECK IF PASSWORD FOR ADMIN IS RIGHT
-		return false;
+		if (username.equalsIgnoreCase("admin")) {
+			String adminPass = "";
+			System.out.println("admin xd");
+			return true;// password.equals(adminPass);
 		}
+		return false;
+	}
+
+	private Librarian getLibrarian(int id, String fullName, String login, String password) {
+		Librarian librarian = new Librarian(id, fullName, login, password);
+		return librarian;
+	}
 
 	private void popError() {
 		errorLabel.setText("Failed to sign in");

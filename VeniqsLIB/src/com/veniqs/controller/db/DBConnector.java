@@ -13,6 +13,10 @@ public class DBConnector {
 	public DBConnector(boolean autoCommitProperty) {
 		connection = createConnection(autoCommitProperty);
 	}
+	
+	public DBConnector() {
+		connection = createConnection(false);
+	}
 
 	public Connection getConnection() {
 		return connection;
