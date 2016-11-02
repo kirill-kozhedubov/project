@@ -13,15 +13,19 @@ public class LibrarianPane extends Stage {
 			synchronized (LibrarianPane.class) {
 				localInstance = instance;
 				if (localInstance == null) {
-					instance = localInstance = new LibrarianPane(null);//!TODO add librarian
+					instance = localInstance = new LibrarianPane(lib);
+			
 				}
 			}
+		} else {
+			instance.show();
 		}
 		return localInstance;
 	}
 
 	private LibrarianPane(Librarian lib) {
-		this.setTitle("dx");
+		this.setTitle(lib + "'s pane");
+		//scene.getStylesheets().add(this.getClass().getResource("/application/application.css").toExternalForm());
 		this.show();
 	}
 }

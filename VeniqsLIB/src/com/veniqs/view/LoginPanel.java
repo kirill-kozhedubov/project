@@ -2,6 +2,8 @@ package com.veniqs.view;
 
 import com.veniqs.controller.login.SignInButtonHandler;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -35,7 +38,35 @@ public class LoginPanel extends Stage {
 		// error
 		Label errorLabel = new Label();
 		errorLabel.getStyleClass().add("error");
-		VBox errorBox = new VBox(errorLabel);
+		HBox errorBox = new HBox(errorLabel);
+		
+		
+		
+		//!TODO DELETE THIS SHIT!
+		@Deprecated Button asAdmin = new Button("Admin");
+		@Deprecated Button asLibrarian = new Button("Librarian");
+		errorBox.getChildren().addAll(asAdmin, asLibrarian);
+		asAdmin.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			@Deprecated public void handle(ActionEvent event) {
+				// TODO DELETE THIS SHIT
+				AdminPane.getInstance();
+				//LoginPanel.INSTANCE.close();
+			}
+		});
+		asLibrarian.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			@Deprecated public void handle(ActionEvent event) {
+				// TODO DELETE THIS SHIT
+				LibrarianPane.getInstance(null);
+				//LoginPanel.INSTANCE.close();
+			}
+		});
+		//!TODO DELETE THIS SHIT!
+		
+		
 
 		// button
 		Button signInButton = new Button("Sign in");

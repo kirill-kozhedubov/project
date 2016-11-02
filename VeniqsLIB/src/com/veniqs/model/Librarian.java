@@ -20,7 +20,8 @@ public class Librarian {
 
 	@Override
 	public String toString() {
-		return "Librarian [id=" + id + ", fullName=" + fullName + ", login=" + login + ", password=" + password + "]";
+		//return "Librarian [id=" + id + ", fullName=" + fullName + ", login=" + login + ", password=" + password + "]";
+		return fullName;
 	}
 
 }

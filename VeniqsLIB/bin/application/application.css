@@ -17,3 +17,11 @@
  .signin:hover {
 	-fx-background-color: rgb(0,175,255);
 }
+
+#showPane {
+	-fx-background-color: rgb(255,255,255);
+}
+
+#addPane {
+	-fx-background-color: rgb(230,230,230);
+}
