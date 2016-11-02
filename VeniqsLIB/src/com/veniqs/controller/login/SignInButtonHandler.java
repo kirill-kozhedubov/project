@@ -1,6 +1,14 @@
 package com.veniqs.controller.login;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import com.veniqs.controller.db.DBConnector;
 import com.veniqs.model.Librarian;
+import com.veniqs.view.AdminPane;
+import com.veniqs.view.LibrarianPane;
+import com.veniqs.view.LoginPanel;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,34 +40,48 @@ public class SignInButtonHandler implements EventHandler<ActionEvent> {
 	}
 
 	private void getLoginStatus(String username, String password) {
-		if (regularLoginCheck(username, password)) {
-			if (loginAsAdminCheck(username, password)) {
-				System.out.println("login as admin successful");
+		Librarian lib = regularLoginCheck(username, password);
+		if (lib != null) {
+			if (lib.getLogin().equalsIgnoreCase("admin")) {
+				AdminPane.getInstance();
+				LoginPanel.INSTANCE.close();
 			} else {
-				System.out.println("login as user successful");
+				LibrarianPane.getInstance(lib);
+				LoginPanel.INSTANCE.close();
 			}
+
 		} else {
 			popError();
 		}
 	}
 
-	private boolean regularLoginCheck(String username, String password) {
+	private Librarian regularLoginCheck(String username, String password) {
+		Librarian lib = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+			DBConnector dbcon = new DBConnector(false);
+			Connection c = dbcon.getConnection();
+			System.out.println("Opened database successfully");
+			Statement stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM LIBRARIAN WHERE LOGIN='" + username + "' AND PASSWORD='" + password + "' LIMIT 1");
 
-		return false;
-	}
-
-	private boolean loginAsAdminCheck(String username, String password) {
-		if (username.equalsIgnoreCase("admin")) {
-			String adminPass = "";
-			System.out.println("admin xd");
-			return true;// password.equals(adminPass);
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("full_name");
+				String login = rs.getString("login");
+				String pass = rs.getString("password");
+				lib = new Librarian(id, name, login, pass);
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			System.err.println("ОШЫБКА С БИБЛИОТЕКАРЕМ " + e.getClass().getName() + ": " + e.getMessage());
+			// System.exit(0);
 		}
-		return false;
-	}
-
-	private Librarian getLibrarian(int id, String fullName, String login, String password) {
-		Librarian librarian = new Librarian(id, fullName, login, password);
-		return librarian;
+		// System.out.println("Operation done successfully");
+		return lib;
 	}
 
 	private void popError() {

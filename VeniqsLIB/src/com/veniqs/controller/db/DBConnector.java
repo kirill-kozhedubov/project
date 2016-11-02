@@ -48,14 +48,13 @@ public class DBConnector {
 			dbConnection = DriverManager.getConnection(Database.getPath(), Database.getUsername(),
 					Database.getPassword());
 			dbConnection.setAutoCommit(setAutoCommit);
-			System.out.println("Opened database successfully");
+			System.out.println("Opened database connection successfully");
 
 			// c.close(); !TODO I GOTTA CLOSE CONNECTION FROM TIMES TO TIMES
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			// System.exit(0);
 		}
-		System.out.println("connection opened");
 		return dbConnection;
 	}
 

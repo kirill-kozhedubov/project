@@ -1,24 +1,27 @@
 package com.veniqs.view;
 
-import javafx.scene.layout.BorderPane;
+import com.veniqs.model.Librarian;
 
-public class LibrarianPane extends BorderPane {
+import javafx.stage.Stage;
+
+public class LibrarianPane extends Stage {
 	private static volatile LibrarianPane instance;
 
-	public static LibrarianPane getInstance() {
+	public static LibrarianPane getInstance(Librarian lib) {
 		LibrarianPane localInstance = instance;
 		if (localInstance == null) {
 			synchronized (LibrarianPane.class) {
 				localInstance = instance;
 				if (localInstance == null) {
-					instance = localInstance = new LibrarianPane();
+					instance = localInstance = new LibrarianPane(null);//!TODO add librarian
 				}
 			}
 		}
 		return localInstance;
 	}
 
-	private LibrarianPane() {
-
+	private LibrarianPane(Librarian lib) {
+		this.setTitle("dx");
+		this.show();
 	}
 }
