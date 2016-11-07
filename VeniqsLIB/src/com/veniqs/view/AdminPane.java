@@ -1,5 +1,7 @@
 package com.veniqs.view;
 
+import com.veniqs.controller.admin.PublisherPane;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -77,7 +79,7 @@ public class AdminPane extends Stage {
 		});
 
 		topPane.getChildren().add(topVBox);
-		topVBox.getChildren().addAll(whatToAddBox, addButton);
+		topVBox.getChildren().addAll(whatToAddBox, addButton, new PublisherPane(whatToAddBox));
 		
 		
 		
