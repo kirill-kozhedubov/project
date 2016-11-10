@@ -15,14 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class LoginPanel extends Stage {
+public class LoginPane extends Stage {
 
-	public static final LoginPanel INSTANCE = new LoginPanel(); // singleton
+	public static final LoginPane INSTANCE = new LoginPane(); // singleton
 
 	private BorderPane root;
 	private Scene scene;
 
-	private LoginPanel() {
+	private LoginPane() {
 		root = new BorderPane();
 
 		// username

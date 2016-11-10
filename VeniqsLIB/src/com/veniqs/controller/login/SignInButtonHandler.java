@@ -8,7 +8,7 @@ import com.veniqs.controller.db.DBConnector;
 import com.veniqs.model.Librarian;
 import com.veniqs.view.AdminPane;
 import com.veniqs.view.LibrarianPane;
-import com.veniqs.view.LoginPanel;
+import com.veniqs.view.LoginPane;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,10 +44,10 @@ public class SignInButtonHandler implements EventHandler<ActionEvent> {
 		if (lib != null) {
 			if (lib.getLogin().equalsIgnoreCase("admin")) {
 				AdminPane.getInstance();
-				LoginPanel.INSTANCE.close();
+				LoginPane.INSTANCE.close();
 			} else {
 				LibrarianPane.getInstance(lib);
-				LoginPanel.INSTANCE.close();
+				LoginPane.INSTANCE.close();
 			}
 
 		} else {

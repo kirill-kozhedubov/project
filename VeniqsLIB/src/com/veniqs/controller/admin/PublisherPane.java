@@ -1,5 +1,11 @@
 package com.veniqs.controller.admin;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.veniqs.controller.db.DBConnector;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -62,8 +68,19 @@ class AddPublisherHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-
+		try {
+			DBConnector connection = new DBConnector();
+			Connection c = connection.getConnection();
+			System.out.println("Opened database successfully");
+			Statement stmt = c.createStatement();
+			
+			
+			stmt.close();
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
