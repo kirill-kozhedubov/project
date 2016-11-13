@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -61,27 +62,11 @@ public class AdminPane extends Stage {
 		
 		// topPane
 		VBox topVBox = new VBox();
-		ComboBox whatToAddBox = new ComboBox(AdminPane.getOptions());
-		Button addButton = new Button("add");
-		whatToAddBox.setPromptText("hello");
-		addButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					String st = whatToAddBox.getSelectionModel().getSelectedItem().toString();
-					System.out.println(st);
-					if (st.equals("Publisher")) System.out.println("XDXDXD");
-				} catch (NullPointerException e) {
-					System.out.println("null");
-				}
-			}
-		});
-
+		ComboBox<String> whatToAddBox = new ComboBox(AdminPane.getOptions());
+		whatToAddBox.setPromptText("Chose...");
+		topVBox.getChildren().addAll(whatToAddBox, new PublisherPane(whatToAddBox));
 		topPane.getChildren().add(topVBox);
-		topVBox.getChildren().addAll(whatToAddBox, addButton, new PublisherPane(whatToAddBox));
-		
-		
+		topPane.setPadding(new Insets(10));
 		
 		
 		
@@ -106,6 +91,9 @@ public class AdminPane extends Stage {
 		options.add("Language");
 		options.add("Genre");
 		options.add("Customer");
+		options.add("Book");
+		options.add("Librarian");
+		options.add("Logbook");
 		return options;
 	}
 

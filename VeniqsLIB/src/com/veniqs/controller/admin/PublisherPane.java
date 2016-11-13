@@ -13,10 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class PublisherPane extends VBox {
+public class PublisherPane extends GridPane {
 
 	private Label nameLabel;
 	private TextField nameTextField;
@@ -32,28 +33,26 @@ public class PublisherPane extends VBox {
 	
 	public PublisherPane(ComboBox<String> whatToAddComboBox) {
 		this.whatToAddComboBox = whatToAddComboBox;
-		
+	    this.setHgap(10);
+	    this.setVgap(10);
+	    this.setPadding(new Insets(10, 10, 10, 10));
+	    
 		nameLabel = new Label("Name");
 		nameTextField = new TextField();
 		messageLabel = new Label();
-		addingInfoBox = new HBox(nameLabel, nameTextField, messageLabel);
-		addingInfoBox.setPadding(new Insets(5));
 
-		addButton = new Button("Add");
-		checkButton = new Button("Check");
-		buttonBox = new HBox(addButton, checkButton);
-		buttonBox.setPadding(new Insets(5));
+		addButton = new Button("Add to database");
 
 		AddPublisherHandler addHandler = new AddPublisherHandler(whatToAddComboBox);
-		CheckPublisherHandler checkHandler = new CheckPublisherHandler(whatToAddComboBox);
 		addButton.setOnAction(addHandler);
-		checkButton.setOnAction(checkHandler);
+
 		
 		
 		
-		
-		this.setPadding(new Insets(5));
-		this.getChildren().addAll(addingInfoBox, buttonBox);
+		this.add(nameLabel, 1, 1);
+		this.add(nameTextField, 2, 1);
+		this.add(addButton, 2, 2);
+		this.add(messageLabel, 1, 3);
 	}
 
 }
@@ -71,7 +70,7 @@ class AddPublisherHandler implements EventHandler<ActionEvent> {
 		try {
 			DBConnector connection = new DBConnector();
 			Connection c = connection.getConnection();
-			System.out.println("Opened database successfully");
+			System.out.println("Opened database successfully addpubleventHandler");
 			Statement stmt = c.createStatement();
 			
 			
@@ -85,17 +84,3 @@ class AddPublisherHandler implements EventHandler<ActionEvent> {
 
 }
 
-class CheckPublisherHandler implements EventHandler<ActionEvent> {
-	
-	private ComboBox<String> comboBox;
-
-	CheckPublisherHandler(ComboBox<String> comboBox) {
-		this.comboBox = comboBox;
-	}
-
-	@Override
-	public void handle(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-
-}
