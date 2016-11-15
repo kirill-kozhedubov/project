@@ -60,8 +60,8 @@ public class AdminPane extends Stage {
 		VBox topVBox = new VBox();
 		whatToAddBox = new ComboBox(AdminPane.getOptions());
 		whatToAddBox.setPromptText("Chose...");
-		topVBox.getChildren().addAll(whatToAddBox);
-		topPane.getChildren().addAll(topVBox, underTopPane);
+		topVBox.getChildren().addAll(whatToAddBox, underTopPane);
+		topPane.getChildren().addAll(topVBox);
 		topPane.setPadding(new Insets(10));
 
 		WhatToAddHandler whatToAddHandler = new WhatToAddHandler(whatToAddBox, underTopPane);
