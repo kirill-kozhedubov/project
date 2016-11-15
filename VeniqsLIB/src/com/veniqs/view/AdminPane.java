@@ -1,15 +1,12 @@
 package com.veniqs.view;
 
-import com.veniqs.controller.admin.PublisherPane;
+import com.veniqs.controller.admin.WhatToAddHandler;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
@@ -39,14 +36,17 @@ public class AdminPane extends Stage {
 	private BorderPane root;
 	private Scene scene;
 	private StackPane topPane;
+	private VBox underTopPane;
 	private StackPane botPane;
 	private SplitPane rootSplitPane;
+	private ComboBox<String> whatToAddBox;
 
 	private AdminPane() {
 
 		root = new BorderPane();
 		rootSplitPane = new SplitPane();
 		topPane = new StackPane();
+		underTopPane = new VBox();
 		botPane = new StackPane();
 
 		rootSplitPane.setOrientation(Orientation.VERTICAL);
@@ -56,25 +56,16 @@ public class AdminPane extends Stage {
 		rootSplitPane.setDividerPositions(0.5f, 0.5f);
 		root.setCenter(rootSplitPane);
 
-		
-		
-		
-		
 		// topPane
 		VBox topVBox = new VBox();
-		ComboBox<String> whatToAddBox = new ComboBox(AdminPane.getOptions());
+		whatToAddBox = new ComboBox(AdminPane.getOptions());
 		whatToAddBox.setPromptText("Chose...");
-		topVBox.getChildren().addAll(whatToAddBox, new PublisherPane(whatToAddBox));
-		topPane.getChildren().add(topVBox);
+		topVBox.getChildren().addAll(whatToAddBox);
+		topPane.getChildren().addAll(topVBox, underTopPane);
 		topPane.setPadding(new Insets(10));
-		
-		
-		
-		
-		
-		
-		
-		
+
+		WhatToAddHandler whatToAddHandler = new WhatToAddHandler(whatToAddBox, underTopPane);
+		whatToAddBox.getSelectionModel().selectedItemProperty().addListener(whatToAddHandler);
 
 		scene = new Scene(root, 1000, 800);
 		this.setResizable(false);
@@ -95,6 +86,14 @@ public class AdminPane extends Stage {
 		options.add("Librarian");
 		options.add("Logbook");
 		return options;
+	}
+
+	public ComboBox<String> getAddComboBox() {
+		return whatToAddBox;
+	}
+
+	public VBox getTopPane() {
+		return underTopPane;
 	}
 
 }

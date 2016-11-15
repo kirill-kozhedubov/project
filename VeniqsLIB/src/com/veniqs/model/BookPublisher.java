@@ -31,7 +31,6 @@ public class BookPublisher {
 	public static boolean deleteFromBase(String name) {
 		//!TODO Auto generated method
 		return false;
-
 	}
 
 	public static boolean deleteFromBase(int id) {
