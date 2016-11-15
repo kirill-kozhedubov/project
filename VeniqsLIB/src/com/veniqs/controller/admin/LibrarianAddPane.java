@@ -1,7 +1,6 @@
 package com.veniqs.controller.admin;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -16,56 +15,72 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
-public class OnlyNamePane extends GridPane {
+public class LibrarianAddPane extends GridPane {
 
 	private Label nameLabel;
 	private TextField nameTextField;
-	private Label messageLabel;
+
+	private Label loginLabel;
+	private TextField loginTextField;
+
+	private Label passwordLabel;
+	private TextField passwordTextField;
 
 	private Button addButton;
-	private Button checkButton;
-
-	private HBox addingInfoBox;
-	private HBox buttonBox;
 
 	private ComboBox<String> whatToAddComboBox;
 
 	private EventHandler<ActionEvent> handler;
 
-	public OnlyNamePane(ComboBox<String> whatToAddComboBox) {
+	public LibrarianAddPane(ComboBox<String> whatToAddComboBox) {
 		this.whatToAddComboBox = whatToAddComboBox;
 
 		this.setHgap(10);
 		this.setVgap(10);
 		this.setPadding(new Insets(10, 10, 10, 10));
 
-		nameLabel = new Label("Name");
+		nameLabel = new Label("Full name");
 		nameTextField = new TextField();
-		messageLabel = new Label();
+
+		loginLabel = new Label("Login");
+		loginTextField = new TextField();
+
+		passwordLabel = new Label("Password");
+		passwordTextField = new TextField();
 
 		addButton = new Button("Add to database");
-		handler = new AddOneEntityHandler(whatToAddComboBox, nameTextField);
+		handler = new AddLibrarianHandler(whatToAddComboBox, nameTextField, loginTextField, passwordTextField);
 
 		addButton.setOnAction(handler);
-
+		
+		// this.add(child, col, row);
 		this.add(nameLabel, 1, 1);
+		this.add(loginLabel, 1, 2);
+		this.add(passwordLabel, 1, 3);
+		
 		this.add(nameTextField, 2, 1);
-		this.add(addButton, 2, 2);
-		this.add(messageLabel, 1, 3);
+		this.add(loginTextField, 2, 2);
+		this.add(passwordTextField, 2, 3);
+		
+		this.add(addButton, 2, 4);
+		
 	}
 
 }
 
-class AddOneEntityHandler implements EventHandler<ActionEvent> {
+class AddLibrarianHandler implements EventHandler<ActionEvent> {
 
 	private ComboBox<String> comboBox;
-	private TextField nameTextField;
+	private TextField name;
+	private TextField login;
+	private TextField password;
 
-	AddOneEntityHandler(ComboBox<String> comboBox, TextField nameTextField) {
+	AddLibrarianHandler(ComboBox<String> comboBox, TextField name, TextField login, TextField password) {
 		this.comboBox = comboBox;
-		this.nameTextField = nameTextField;
+		this.name = name;
+		this.login = login;
+		this.password = password;
 	}
 
 	@Override
@@ -73,9 +88,9 @@ class AddOneEntityHandler implements EventHandler<ActionEvent> {
 		try {
 			DBConnector connection = new DBConnector();
 			Connection c = connection.getConnection();
-			System.out.println("Opened database successfully AddOneEntityHandler");
+			System.out.println("Opened database successfully LibrarianAddPane");
 			Statement stmt = c.createStatement();
-			String query = whatToAdd();
+			String query = "SELECT create_or_get_librarian_id('" + name.getText() + "', '" + login.getText() + "', '" + password.getText() + "');";
 			stmt.executeQuery(query);
 			/*
 			 * System.out.println(query); ResultSet rs =
@@ -90,33 +105,7 @@ class AddOneEntityHandler implements EventHandler<ActionEvent> {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("ОШИБКА OnlyNamePane " + e.getClass().getName() + ": " + e.getMessage());
+			System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
 		}
-	}
-
-	private String whatToAdd() {
-		String key = null;
-		String query = null;
-		key = comboBox.getValue();
-
-		switch (key) {
-		case "Publisher":
-			query = "SELECT create_or_get_publisher_id('" + nameTextField.getText() + "');";
-			break;
-		case "Author":
-			query = "SELECT create_or_get_author_id('" + nameTextField.getText() + "');";
-			break;
-		case "Language":
-			query = "SELECT create_or_get_language_id('" + nameTextField.getText() + "');";
-			break;
-		case "Genre":
-			query = "SELECT create_or_get_genre_id('" + nameTextField.getText() + "');";
-			break;
-		case "Customer":
-			query = "SELECT create_or_get_customer_id('" + nameTextField.getText() + "');";
-			break;
-		}
-
-		return query;
 	}
 }

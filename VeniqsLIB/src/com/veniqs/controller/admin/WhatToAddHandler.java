@@ -24,23 +24,23 @@ public class WhatToAddHandler implements ChangeListener<String> {
 		switch (newVal) {
 		case "Publisher":
 			System.out.println("Publisher chosen");
-			clearListAndAddPane(new OnlyNamePane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
 			break;
 		case "Author":
 			System.out.println("Author chosen");
-			clearListAndAddPane(new OnlyNamePane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
 			break;
 		case "Language":
 			System.out.println("Language chosen");
-			clearListAndAddPane(new OnlyNamePane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
 			break;
 		case "Genre":
 			System.out.println("Genre chosen");
-			clearListAndAddPane(new OnlyNamePane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
 			break;
 		case "Customer":
 			System.out.println("Customer chosen");
-			clearListAndAddPane(new OnlyNamePane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
 			break;
 		case "Book":
 			System.out.println("Book chosen");
@@ -48,7 +48,7 @@ public class WhatToAddHandler implements ChangeListener<String> {
 			break;
 		case "Librarian":
 			System.out.println("Librarian chosen");
-			clearListAndAddPane(null);
+			clearListAndAddPane(new LibrarianAddPane(whatToAddBox));
 			break;
 		case "Logbook":
 			System.out.println("Logbook chosen");
