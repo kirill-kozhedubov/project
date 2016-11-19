@@ -82,18 +82,19 @@ public class BookAddPane extends GridPane {
 
 		// add book button
 		addButton = new Button("Add to database");
-		handler = new AddBookHandler(whatToAddComboBox, titleTextField, languageTextField, publisherTextField, yearTextField, genreTextFields, authorTextFields);
+		handler = new AddBookHandler(whatToAddComboBox, titleTextField, languageTextField, publisherTextField,
+				yearTextField, genreTextFields, authorTextFields);
 		addButton.setOnAction(handler);
 
 		// add things to grid
-	
+
 		// genre and author
 		AddTextFieldToFormAndListHandler authorAdd = new AddTextFieldToFormAndListHandler(this, authorTextFields, 6, 2);
 		AddTextFieldToFormAndListHandler genreAdd = new AddTextFieldToFormAndListHandler(this, genreTextFields, 4, 2);
-		
+
 		addAnotherAuthorTextFieldButton.setOnAction(authorAdd);
 		addAnotherGenreTextFieldButton.setOnAction(genreAdd);
-		
+
 		// labels
 		this.add(titleLabel, 1, 2);
 		this.add(publisherLabel, 1, 3);
@@ -107,8 +108,6 @@ public class BookAddPane extends GridPane {
 		// buttons
 		this.add(addButton, 2, 7);
 
-		
-		
 	}
 
 }
@@ -144,13 +143,14 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 
 	private ComboBox<String> comboBox;
 	TextField title;
-	TextField language; 
+	TextField language;
 	TextField publisher;
-	TextField year; 
+	TextField year;
 	List<TextField> genre;
 	List<TextField> author;
 
-	AddBookHandler(ComboBox<String> comboBox, TextField title, TextField language, TextField publisher, TextField year, List<TextField> genre, List<TextField> author) {
+	AddBookHandler(ComboBox<String> comboBox, TextField title, TextField language, TextField publisher, TextField year,
+			List<TextField> genre, List<TextField> author) {
 		this.comboBox = comboBox;
 		this.title = title;
 		this.language = language;
@@ -158,15 +158,15 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 		this.year = year;
 		this.genre = genre;
 		this.author = author;
-		
+
 	}
 
 	@Override
 	public void handle(ActionEvent arg0) {
-addBook();
+		int bookID = addBook();
+		
 	}
-	
-	
+
 	private int addBook() {
 		int addedOrOverridenBookID = -1;
 		String titleStr = title.getText();
@@ -189,18 +189,24 @@ addBook();
 			rs.close();
 
 			stmt.close();
-			//c.commit();
+			c.commit();
 			c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
 		}
-		
-		
+
 		return addedOrOverridenBookID;
 	}
 	
+	private int addGenresToBook() {
+		return 0;
+	}
 	
+	private int addAuthorsToBook() {
+		return 0;
+	}
 	
+
 }
