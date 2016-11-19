@@ -3,6 +3,7 @@ package com.veniqs.controller.admin;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import com.veniqs.controller.db.DBConnector;
 
@@ -17,8 +18,25 @@ import javafx.scene.layout.GridPane;
 
 public class BookAddPane extends GridPane {
 
-	private Label nameLabel;
-	private TextField nameTextField;
+	private Label titleLabel;
+	private TextField titleTextField;
+
+	private Label languageLabel;
+	private TextField languageTextField;
+
+	private Label publisherLabel;
+	private TextField publisherTextField;
+
+	private Label yearLabel;
+	private TextField yearTextField;
+
+	private Label genreLabel;
+	private List<TextField> genreTextFields;
+	private Button addAnotherGenreTF;
+	
+	private Label authorLabel;
+	private List<TextField> authorTextFields;
+	private Button addAnotherAuthorTF;
 
 	private Button addButton;
 
@@ -26,35 +44,92 @@ public class BookAddPane extends GridPane {
 
 	private EventHandler<ActionEvent> handler;
 
-	public BookAddPane() {
+	public BookAddPane(ComboBox<String> whatToAddComboBox) {
 		this.whatToAddComboBox = whatToAddComboBox;
 
 		this.setHgap(10);
 		this.setVgap(10);
 		this.setPadding(new Insets(10, 10, 10, 10));
 
-		nameLabel = new Label("Full name");
-		nameTextField = new TextField();
+		titleLabel = new Label("Full name");
+		titleTextField = new TextField();
+
+		languageLabel = new Label("Language");
+		languageTextField = new TextField();
+
+		publisherLabel = new Label("Publisher");
+		publisherTextField = new TextField();
+
+		yearLabel = new Label("Year");
+		yearTextField = new TextField();
+
+		// genre
+		genreLabel = new Label("Genre");
+		addAnotherGenreTF = new Button("Add genre");
+		this.add(genreLabel, 3, 1);
+		this.add(addAnotherGenreTF, 4, 1);
+
+		// author
+		authorLabel = new Label("Author");
+		addAnotherAuthorTF = new Button("Add author");
+		this.add(authorLabel, 6, 1);
+		this.add(addAnotherAuthorTF, 7, 1);
+
 		
 		
+		
+		// add book button
 		addButton = new Button("Add to database");
 		handler = new AddBookHandler(whatToAddComboBox);
 
 		addButton.setOnAction(handler);
-		
+
+		// add things to grid
 		// this.add(child, col, row);
+		this.add(titleLabel, 1, 2);
+		this.add(publisherLabel, 1, 3);
+		this.add(languageLabel, 1, 4);
+		this.add(yearLabel, 1, 5);
+
+		this.add(titleTextField, 2, 2);
+		this.add(publisherTextField, 2, 3);
+		this.add(languageTextField, 2, 4);
+		this.add(yearTextField, 2, 5);
+
+		this.add(addButton, 2, 7);
+
 	}
 
+}
+
+class AddTextFieldToFormAndListHandler implements EventHandler<ActionEvent> {
+
+	GridPane mainGrid;
+	List<TextField> tfList;
+	int col;
+	int startRow;
+	
+	AddTextFieldToFormAndListHandler(GridPane mainGrid, List<TextField> tfList, int col, int startRow) {
+		this.mainGrid = mainGrid;
+		this.tfList = tfList;
+		this.col = col;
+		this.startRow = startRow;
+		
+	}
+	
+	@Override
+	public void handle(ActionEvent arg0) {
+		
+	}
 }
 
 class AddBookHandler implements EventHandler<ActionEvent> {
 
 	private ComboBox<String> comboBox;
-	
-	
+
 	AddBookHandler(ComboBox<String> comboBox) {
 		this.comboBox = comboBox;
-		
+
 	}
 
 	@Override
@@ -64,8 +139,10 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 			Connection c = connection.getConnection();
 			System.out.println("Opened database successfully LibrarianAddPane");
 			Statement stmt = c.createStatement();
-			//String query = "SELECT create_or_get_librarian_id('" + name.getText() + "', '" + login.getText() + "', '" + password.getText() + "');";
-			//stmt.executeQuery(query);
+			// String query = "SELECT create_or_get_librarian_id('" +
+			// name.getText() + "', '" + login.getText() + "', '" +
+			// password.getText() + "');";
+			// stmt.executeQuery(query);
 			/*
 			 * System.out.println(query); ResultSet rs =
 			 * stmt.executeQuery(query); while (rs.next()) { int id =

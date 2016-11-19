@@ -44,7 +44,7 @@ public class WhatToAddHandler implements ChangeListener<String> {
 			break;
 		case "Book":
 			System.out.println("Book chosen");
-			clearListAndAddPane(null);
+			clearListAndAddPane(new BookAddPane(whatToAddBox));
 			break;
 		case "Librarian":
 			System.out.println("Librarian chosen");

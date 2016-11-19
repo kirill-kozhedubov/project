@@ -9,22 +9,11 @@ import com.veniqs.controller.db.DBConnector;
 
 import application.Main;
 
-public class AuthorGenerator {
+public class PublisherGenerator {
 
 	private Random rnd = new Random();
-	private String[] firstNameList = { "Bumblebee", "Bandersnatch", "Broccoli", "Rinkydink", "Bombadil", "Boilerdang",
-			"Bandicoot", "Fragglerock", "Muffintop", "Congleton", "Blubberdick", "Buffalo", "Benadryl", "Butterfree",
-			"Burberry", "Whippersnatch", "Buttermilk", "Beezlebub", "Budapest", "Boilerdang", "Blubberwhale",
-			"Bumberstump", "Bulbasaur", "Cogglesnatch", "Liverswort", "Bodybuild", "Johnnycash", "Bendydick",
-			"Burgerking", "Bonaparte", "Bunsenburner", "Billiardball", "Bukkake", "Baseballmitt", "Blubberbutt",
-			"Baseballbat", "Rumblesack", "Barister", "Danglerack", "Rinkydink", "Bombadil", "Honkytonk", "Billyray",
-			"Bumbleshack", "Snorkeldink", "Anglerfish", "Beetlejuice", "Bedlington", "Bandicoot", "Boobytrap",
-			"Blenderdick", "Bentobox", "Anallube", "Pallettown", "Wimbledon", "Buttercup", "Blasphemy", "Syphilis",
-			"Snorkeldink", "Brandenburg", "Barbituate", "Snozzlebert", "Tiddleywomp", "Bouillabaisse", "Wellington",
-			"Benetton", "Bendandsnap", "Timothy", "Brewery", "Bentobox", "Brandybuck", "Benjamin", "Buckminster",
-			"Bourgeoisie", "Bakery", "Oscarbait", "Buckyball", "Bourgeoisie", "Burlington", "Buckingham",
-			"Barnoldswick" };
-	private String[] lastNameList = { "Coddleswort", "Crumplesack", "Curdlesnoot", "Calldispatch", "Humperdinck",
+	
+	private String[] publisher = { "Coddleswort", "Crumplesack", "Curdlesnoot", "Calldispatch", "Humperdinck",
 			"Rivendell", "Cuttlefish", "Lingerie", "Vegemite", "Ampersand", "Cumberbund", "Candycrush", "Clombyclomp",
 			"Cragglethatch", "Nottinghill", "Cabbagepatch", "Camouflage", "Creamsicle", "Curdlemilk", "Upperclass",
 			"Frumblesnatch", "Crumplehorn", "Talisman", "Candlestick", "Chesterfield", "Bumbersplat", "Scratchnsniff",
@@ -37,27 +26,22 @@ public class AuthorGenerator {
 			"Cunningsnatch", "Custardbath", "Kryptonite", "Curdlesnoot", "Cummerbund", "Coochyrash", "Crackerdong",
 			"Crackerdong", "Curdledong", "Crackersprout", "Crumplebutt", "Colonist", "Coochierash" };
 
-	private String getAuthorName() {
-		return getRandomValue(firstNameList) + " " + getRandomValue(lastNameList);
+	private String getPublisherName() {
+		return getRandomValue(publisher);
 	}
 
 	private String getRandomValue(String[] mas) {
 		return mas[rnd.nextInt(mas.length - 1)];
 	}
-
 	
-	private void createAuthors() {
-		
-	}
-	
-	private AuthorGenerator() {
+	private PublisherGenerator() {
 		try {
-			for (int i = 0; i < 26; i++) {
+			for (int i = 0; i < 100; i++) {
 			DBConnector connection = new DBConnector();
 			Connection c = connection.getConnection();
 			//System.out.println("Opened database successfully AddOneEntityHandler");
 			Statement stmt = c.createStatement();
-			String query = "SELECT create_or_get_author_id('" + getAuthorName() + "');";
+			String query = "SELECT create_or_get_publisher_id('" + getPublisherName() + "');";
 			stmt.executeQuery(query);
 			/*
 			 * System.out.println(query); ResultSet rs =
@@ -73,9 +57,9 @@ public class AuthorGenerator {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("ОШИБКА benedict " + e.getClass().getName() + ": " + e.getMessage());
+			System.out.println("ОШИБКА publisher " + e.getClass().getName() + ": " + e.getMessage());
 		}
 		
 	}
-	
+
 }
