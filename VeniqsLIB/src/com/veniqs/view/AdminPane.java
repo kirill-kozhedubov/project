@@ -1,6 +1,7 @@
 package com.veniqs.view;
 
 import com.veniqs.controller.admin.WhatToAddHandler;
+import com.veniqs.model.BookPublisher;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +10,9 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,11 +38,20 @@ public class AdminPane extends Stage {
 
 	private BorderPane root;
 	private Scene scene;
+	private SplitPane rootSplitPane;
+	
+	//top
 	private StackPane topPane;
 	private VBox underTopPane;
-	private StackPane botPane;
-	private SplitPane rootSplitPane;
 	private ComboBox<String> whatToAddBox;
+	
+	//bot
+	private StackPane botPane;
+	private TableView tv;
+	HBox botHBox;
+	
+
+
 
 	private AdminPane() {
 
@@ -67,6 +79,13 @@ public class AdminPane extends Stage {
 		WhatToAddHandler whatToAddHandler = new WhatToAddHandler(whatToAddBox, underTopPane);
 		whatToAddBox.getSelectionModel().selectedItemProperty().addListener(whatToAddHandler);
 
+		
+		//bot pane
+		botHBox = new TableViewPane();
+		botPane.getChildren().add(botHBox);
+		
+		
+		
 		scene = new Scene(root, 1000, 800);
 		this.setResizable(false);
 		this.setScene(scene);
@@ -84,7 +103,7 @@ public class AdminPane extends Stage {
 		options.add("Customer");
 		options.add("Book");
 		options.add("Librarian");
-		options.add("Logbook");
+		/*options.add("Logbook");*/
 		return options;
 	}
 

@@ -50,10 +50,10 @@ public class WhatToAddHandler implements ChangeListener<String> {
 			System.out.println("Librarian chosen");
 			clearListAndAddPane(new LibrarianAddPane(whatToAddBox));
 			break;
-		case "Logbook":
+		/*case "Logbook":
 			System.out.println("Logbook chosen");
 			clearListAndAddPane(null);
-			break;
+			break;*/
 		default:
 			break;
 		}

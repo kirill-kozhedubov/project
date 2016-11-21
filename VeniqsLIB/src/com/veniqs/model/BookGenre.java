@@ -3,12 +3,12 @@ package com.veniqs.model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class BookPublisher {
+public class BookGenre {
 
 	private SimpleIntegerProperty id;
-	private SimpleStringProperty name;
+	private SimpleStringProperty  name;
 
-	public BookPublisher(int idC, String nameC) {
+	public BookGenre(int idC, String nameC) {
 		id = new SimpleIntegerProperty(idC);
 		name = new SimpleStringProperty(nameC);
 	}
@@ -20,5 +20,6 @@ public class BookPublisher {
 	public String getName() {
 		return name.get();
 	}
+
 
 }
