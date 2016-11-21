@@ -163,8 +163,26 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent arg0) {
+		// add book
 		int bookID = addBook();
-		
+
+		// add genres to book
+		addGenresToBook(bookID);
+
+		// add authors to book
+		addAuthorsToBook(bookID);
+
+		// clearing text fields
+		title.clear();
+		language.clear();
+		publisher.clear();
+		year.clear();
+		for (TextField textFieldAuthor : author) {
+			textFieldAuthor.clear();
+		}
+		for (TextField textFieldGenre : genre) {
+			textFieldGenre.clear();
+		}
 	}
 
 	private int addBook() {
@@ -196,17 +214,74 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 			e.printStackTrace();
 			System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
 		}
-
+		System.out.println("addedOrOverridenBookID" + " " + addedOrOverridenBookID);
 		return addedOrOverridenBookID;
 	}
-	
-	private int addGenresToBook() {
-		return 0;
+
+	private void addGenresToBook(int bookID) {
+		for (TextField textField : genre) {
+			if (textField.getText() != null && textField.getText() != "") {
+				int genreID = 0;
+				try {
+					DBConnector connection = new DBConnector();
+					Connection c = connection.getConnection();
+					System.out.println("Opened database successfully add genre to book");
+					Statement stmt = c.createStatement();
+					// stmt.executeQuery("SELECT create_or_get_genre_id('" +
+					// textField.getText() + "');");
+					// System.out.println(query);
+					ResultSet rs = stmt.executeQuery("SELECT create_or_get_genre_id('" + textField.getText() + "');");
+					while (rs.next()) {
+						genreID = rs.getInt(rs.getMetaData().getColumnName(1));
+						// System.out.println(id + " " +
+						// rs.getMetaData().getColumnName(1));
+					}
+					rs.close();
+
+					stmt.executeUpdate("INSERT INTO book_genre_connector(book_id, genre_id) VALUES(" + bookID + ","
+							+ genreID + ");");
+					stmt.close();
+					c.commit();
+					c.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
+				}
+
+			}
+		}
 	}
-	
-	private int addAuthorsToBook() {
-		return 0;
+
+	private void addAuthorsToBook(int bookID) {
+		for (TextField textField : author) {
+			if (textField.getText() != null && textField.getText() != "") {
+				int authorID = 0;
+				try {
+					DBConnector connection = new DBConnector();
+					Connection c = connection.getConnection();
+					System.out.println("Opened database successfully add author to book");
+					Statement stmt = c.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT create_or_get_author_id('" + textField.getText() + "');");
+					while (rs.next()) {
+						authorID = rs.getInt(rs.getMetaData().getColumnName(1));
+					}
+
+					rs.close();
+
+					stmt.executeUpdate("INSERT INTO book_author_connector(book_id, author_id) VALUES(" + bookID + ","
+							+ authorID + ");");
+
+					stmt.close();
+					c.commit();
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
+				}
+
+			}
+		}
 	}
-	
 
 }
