@@ -1,11 +1,13 @@
 package com.veniqs.controller.admin;
 
 import com.veniqs.view.AdminPane;
+import com.veniqs.view.TableViewPane;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -13,10 +15,12 @@ public class WhatToAddHandler implements ChangeListener<String> {
 
 	ComboBox<String> whatToAddBox;
 	VBox topPane;
+	HBox botPane;
 
-	public WhatToAddHandler(ComboBox<String> whatToAddBox, VBox topPane) {
+	public WhatToAddHandler(ComboBox<String> whatToAddBox, VBox topPane, HBox botPane) {
 		this.whatToAddBox = whatToAddBox;
 		this.topPane = topPane;
+		this.botPane = botPane;
 	}
 
 	@Override
@@ -50,19 +54,24 @@ public class WhatToAddHandler implements ChangeListener<String> {
 			System.out.println("Librarian chosen");
 			clearListAndAddPane(new LibrarianAddPane(whatToAddBox));
 			break;
-		/*case "Logbook":
-			System.out.println("Logbook chosen");
-			clearListAndAddPane(null);
-			break;*/
+		/*
+		 * case "Logbook": System.out.println("Logbook chosen");
+		 * clearListAndAddPane(null); break;
+		 */
 		default:
 			break;
 		}
+		clearListAndAddPaneTables(newVal);
 	}
 
-	
+	private void clearListAndAddPaneTables(String type) {
+		botPane.getChildren().clear();
+		botPane.getChildren().add(new TableViewPane(type));
+	}
+
 	private void clearListAndAddPane(GridPane grid) {
 		topPane.getChildren().clear();
 		topPane.getChildren().add(grid);
 	}
-	
+
 }

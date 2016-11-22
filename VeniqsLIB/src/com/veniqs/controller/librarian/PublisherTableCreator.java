@@ -14,7 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class PublisherTableCreator {
+public class PublisherTableCreator implements TableCreator{
 
 	private TableView<BookPublisher> dataTable;
 	private ObservableList<BookPublisher> dataList;

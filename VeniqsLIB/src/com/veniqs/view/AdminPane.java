@@ -76,15 +76,16 @@ public class AdminPane extends Stage {
 		topPane.getChildren().addAll(topVBox);
 		topPane.setPadding(new Insets(10));
 
-		WhatToAddHandler whatToAddHandler = new WhatToAddHandler(whatToAddBox, underTopPane);
-		whatToAddBox.getSelectionModel().selectedItemProperty().addListener(whatToAddHandler);
 
 		
 		//bot pane
-		botHBox = new TableViewPane();
+		botHBox = new HBox();
 		botPane.getChildren().add(botHBox);
 		
 		
+
+		WhatToAddHandler whatToAddHandler = new WhatToAddHandler(whatToAddBox, underTopPane, botHBox);
+		whatToAddBox.getSelectionModel().selectedItemProperty().addListener(whatToAddHandler);
 		
 		scene = new Scene(root, 1000, 800);
 		this.setResizable(false);

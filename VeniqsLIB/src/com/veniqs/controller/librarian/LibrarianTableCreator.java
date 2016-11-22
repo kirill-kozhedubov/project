@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.veniqs.controller.db.DBConnector;
-import com.veniqs.model.BookAuthor;
+import com.veniqs.model.LibrarianTableModel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,31 +14,36 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class AuthorTableCreator implements TableCreator{
+public class LibrarianTableCreator implements TableCreator {
 
-	private TableView<BookAuthor> dataTable;
-	private ObservableList<BookAuthor> dataList;
+	private TableView<LibrarianTableModel> dataTable;
+	private ObservableList<LibrarianTableModel> dataList;
 
-	private TableColumn<BookAuthor, Integer> colID;
-	private TableColumn<BookAuthor, String> colName;
-
-	public AuthorTableCreator() {
+	public LibrarianTableCreator() {
 		// create table + set items
 		dataList = getData();
-		dataTable = new TableView<BookAuthor>();
+		dataTable = new TableView<LibrarianTableModel>();
 
 		// create cols
 		TableColumn idCol = new TableColumn("ID");
-		idCol.setCellValueFactory(new PropertyValueFactory<BookAuthor, Integer>("id"));
+		idCol.setCellValueFactory(new PropertyValueFactory<LibrarianTableModel, Integer>("id"));
 		idCol.setPrefWidth(50);
 
 		TableColumn nameCol = new TableColumn("Full Name");
-		nameCol.setCellValueFactory(new PropertyValueFactory<BookAuthor, String>("name"));
-		nameCol.setPrefWidth(300);
+		nameCol.setCellValueFactory(new PropertyValueFactory<LibrarianTableModel, String>("fullName"));
+		nameCol.setPrefWidth(150);
+		
+		TableColumn loginCol = new TableColumn("Login");
+		loginCol.setCellValueFactory(new PropertyValueFactory<LibrarianTableModel, String>("login"));
+		loginCol.setPrefWidth(150);
+		
+		TableColumn passwordCol = new TableColumn("Password");
+		passwordCol.setCellValueFactory(new PropertyValueFactory<LibrarianTableModel, String>("password"));
+		passwordCol.setPrefWidth(150);
 
 		// set columbs
-		dataTable.getColumns().setAll(idCol, nameCol);
-		dataTable.setPrefWidth(350);
+		dataTable.getColumns().setAll(idCol, nameCol, loginCol, passwordCol);
+		dataTable.setPrefWidth(500);
 		dataTable.setPrefHeight(300);
 
 		dataTable.setItems(dataList);
@@ -47,19 +52,21 @@ public class AuthorTableCreator implements TableCreator{
 		// RowSelectChangeListener());
 	}
 
-	private ObservableList<BookAuthor> getData() {
-		ObservableList<BookAuthor> data = FXCollections.observableArrayList();
+	private ObservableList<LibrarianTableModel> getData() {
+		ObservableList<LibrarianTableModel> data = FXCollections.observableArrayList();
 		try {
 			DBConnector connection = new DBConnector();
 			Connection c = connection.getConnection();
 			Statement stmt = c.createStatement();
-			String query = "SELECT * FROM book_author;";
+			String query = "SELECT * FROM librarian;";
 			stmt.executeQuery(query);
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("full_name");
-				BookAuthor ap = new BookAuthor(id, name);
+				String login = rs.getString("login");
+				String password = rs.getString("password");
+				LibrarianTableModel ap = new LibrarianTableModel(id, name, login, password);
 				data.add(ap);
 			}
 			rs.close();
@@ -74,7 +81,7 @@ public class AuthorTableCreator implements TableCreator{
 		return data;
 	}
 
-	public TableView<BookAuthor> getTable() {
+	public TableView<LibrarianTableModel> getTable() {
 		return dataTable;
 	}
 }

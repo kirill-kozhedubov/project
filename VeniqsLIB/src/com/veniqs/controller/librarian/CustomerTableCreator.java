@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.veniqs.controller.db.DBConnector;
-import com.veniqs.model.BookGenre;
+import com.veniqs.model.Customer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,26 +14,26 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class GenreTableCreator implements TableCreator{
+public class CustomerTableCreator implements TableCreator{
 
-	private TableView<BookGenre> dataTable;
-	private ObservableList<BookGenre> dataList;
+	private TableView<Customer> dataTable;
+	private ObservableList<Customer> dataList;
 
-	private TableColumn<BookGenre, Integer> colID;
-	private TableColumn<BookGenre, String> colName;
+	private TableColumn<Customer, Integer> colID;
+	private TableColumn<Customer, String> colName;
 
-	public GenreTableCreator() {
+	public CustomerTableCreator() {
 		// create table + set items
 		dataList = getData();
-		dataTable = new TableView<BookGenre>();
+		dataTable = new TableView<Customer>();
 
 		// create cols
 		TableColumn idCol = new TableColumn("ID");
-		idCol.setCellValueFactory(new PropertyValueFactory<BookGenre, Integer>("id"));
+		idCol.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
 		idCol.setPrefWidth(50);
 
-		TableColumn nameCol = new TableColumn("Name");
-		nameCol.setCellValueFactory(new PropertyValueFactory<BookGenre, String>("name"));
+		TableColumn nameCol = new TableColumn("Full Name");
+		nameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		nameCol.setPrefWidth(300);
 
 		// set columbs
@@ -47,26 +47,25 @@ public class GenreTableCreator implements TableCreator{
 		// RowSelectChangeListener());
 	}
 
-	private ObservableList<BookGenre> getData() {
-		ObservableList<BookGenre> data = FXCollections.observableArrayList();
+	private ObservableList<Customer> getData() {
+		ObservableList<Customer> data = FXCollections.observableArrayList();
 		try {
 			DBConnector connection = new DBConnector();
 			Connection c = connection.getConnection();
 			Statement stmt = c.createStatement();
-			String query = "SELECT * FROM book_genre;";
+			String query = "SELECT * FROM customer;";
 			stmt.executeQuery(query);
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				String name = rs.getString("name");
-				BookGenre ap = new BookGenre(id, name);
+				String name = rs.getString("full_name");
+				Customer ap = new Customer(id, name);
 				data.add(ap);
 			}
 			rs.close();
 			stmt.close();
 			c.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
 		}
@@ -74,7 +73,7 @@ public class GenreTableCreator implements TableCreator{
 		return data;
 	}
 
-	public TableView<BookGenre> getTable() {
+	public TableView<Customer> getTable() {
 		return dataTable;
 	}
 }
