@@ -6,6 +6,7 @@ import com.veniqs.controller.librarian.CustomerTableCreator;
 import com.veniqs.controller.librarian.GenreTableCreator;
 import com.veniqs.controller.librarian.LanguageTableCreator;
 import com.veniqs.controller.librarian.LibrarianTableCreator;
+import com.veniqs.controller.librarian.LogbookTableCreator;
 import com.veniqs.controller.librarian.PublisherTableCreator;
 import com.veniqs.controller.librarian.TableCreator;
 
@@ -20,11 +21,13 @@ public class TableViewPane extends HBox {
 		this.getChildren().add(table);
 	}
 
-	public static BookTableCreator getBtc() {
-		return new BookTableCreator();
+	public static BookTableCreator getBtc(boolean takenCheck) {
+		return new BookTableCreator(takenCheck);
 	}
 	
-	
+	public static LogbookTableCreator getLtc() {
+		return new LogbookTableCreator();
+	}
 	
 	
 	public Node getTable() {
@@ -56,7 +59,7 @@ public class TableViewPane extends HBox {
 			break;
 		case "Book":
 			System.out.println("Book chosen");
-			tableCreator = new BookTableCreator();
+			tableCreator = new BookTableCreator(false);
 			break;
 		case "Librarian":
 			System.out.println("Librarian chosen");
@@ -64,11 +67,11 @@ public class TableViewPane extends HBox {
 			break;
 		case "Logbook":
 			System.out.println("Logbook chosen");
-			tableCreator = new BookTableCreator();
+			tableCreator = new BookTableCreator(true);
 			break;
 		case "Logbook update":
 			System.out.println("Logbook update chosen");
-			
+			tableCreator = new LogbookTableCreator();
 			break;
 		}
 

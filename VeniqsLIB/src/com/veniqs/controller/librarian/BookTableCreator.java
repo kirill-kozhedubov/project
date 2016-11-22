@@ -30,20 +30,20 @@ public class BookTableCreator implements TableCreator {
 	public Book getSelectedBook() {
 		return selectedBook;
 	}
-
-	public BookTableCreator() {
+	
+	public BookTableCreator(boolean checkForTaken ) {
 		// create table + set items
-		dataList = getData();
+		dataList = getData(checkForTaken);
 		dataTable = new TableView<Book>();
 
 		// create cols
 		TableColumn idCol = new TableColumn("ID");
 		idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("id"));
-		idCol.setPrefWidth(30);
+		idCol.setPrefWidth(20);
 
 		TableColumn titleCol = new TableColumn("Title");
 		titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-		titleCol.setPrefWidth(150);
+		titleCol.setPrefWidth(200);
 
 		TableColumn langCol = new TableColumn("Language");
 		langCol.setCellValueFactory(new PropertyValueFactory<Book, String>("language"));
@@ -51,15 +51,19 @@ public class BookTableCreator implements TableCreator {
 
 		TableColumn publisherCol = new TableColumn("Publisher");
 		publisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
-		publisherCol.setPrefWidth(120);
+		publisherCol.setPrefWidth(150);
 
 		TableColumn dateCol = new TableColumn("Release");
 		dateCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("publicationDate"));
-		dateCol.setPrefWidth(50);
+		dateCol.setPrefWidth(60);
+		
+		TableColumn takenCol = new TableColumn("Taken");
+		takenCol.setCellValueFactory(new PropertyValueFactory<Book, Boolean>("isTaken"));
+		takenCol.setPrefWidth(70);
 
 		// set columbs
-		dataTable.getColumns().setAll(idCol, titleCol, langCol, publisherCol, dateCol);
-		dataTable.setPrefWidth(450);
+		dataTable.getColumns().setAll(idCol, titleCol, langCol, publisherCol, dateCol, takenCol);
+		dataTable.setPrefWidth(600);
 		dataTable.setPrefHeight(300);
 
 		dataTable.setItems(dataList);
@@ -82,16 +86,27 @@ public class BookTableCreator implements TableCreator {
 		return listener;
 	}
 
-	private ObservableList<Book> getData() {
+	public ObservableList<Book> getData(boolean checkForTaken) {
 		ObservableList<Book> data = FXCollections.observableArrayList();
 		try {
 			DBConnector connection = new DBConnector();
 			Connection c = connection.getConnection();
 			Statement stmt = c.createStatement();
-			String query = "SELECT b.id, b.title, p.name as publ_name, l.name as lang_name, b.publication_date as publ_date "
-					+ " FROM book b " + " JOIN publisher p " + " ON b.publisher_id = p.id " + " JOIN language l "
-					+ " ON b.language_id = l.id " + " ORDER BY b.id; ";
-
+			String query = "";
+			if (checkForTaken) {
+				query = "SELECT b.id, b.title, p.name as publ_name, l.name as lang_name, b.publication_date as publ_date "  + " , b.is_taken_flag as taken "
+						+ " FROM book b " + " JOIN publisher p " + " ON b.publisher_id = p.id " + " JOIN language l "
+						+ " ON b.language_id = l.id " 
+						+ " WHERE b.is_taken_flag = 'false' "
+						+ " ORDER BY b.id; ";
+			} else {
+				query = "SELECT b.id, b.title, p.name as publ_name, l.name as lang_name, b.publication_date as publ_date "  + " , b.is_taken_flag as taken "
+						+ " FROM book b " + " JOIN publisher p " + " ON b.publisher_id = p.id " + " JOIN language l "
+						+ " ON b.language_id = l.id " + " ORDER BY b.id; ";
+			}
+			
+			
+			
 			stmt.executeQuery(query);
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -100,7 +115,8 @@ public class BookTableCreator implements TableCreator {
 				String language = rs.getString("lang_name");
 				String publisher = rs.getString("publ_name");
 				int date = rs.getInt("publ_date");
-				Book ap = new Book(id, title, language, publisher, date);
+				boolean isTaken = rs.getBoolean("taken");
+				Book ap = new Book(id, title, language, publisher, date, isTaken);
 				data.add(ap);
 			}
 			rs.close();

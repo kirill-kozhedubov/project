@@ -34,11 +34,11 @@ public class PublisherTableCreator implements TableCreator{
 
 		TableColumn nameCol = new TableColumn("Name");
 		nameCol.setCellValueFactory(new PropertyValueFactory<BookPublisher, String>("name"));
-		nameCol.setPrefWidth(300);
+		nameCol.setPrefWidth(550);
 
 		// set columbs
 		dataTable.getColumns().setAll(idCol, nameCol);
-		dataTable.setPrefWidth(350);
+		dataTable.setPrefWidth(600);
 		dataTable.setPrefHeight(300);
 
 		dataTable.setItems(dataList);

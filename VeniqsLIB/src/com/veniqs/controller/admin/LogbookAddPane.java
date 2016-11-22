@@ -52,7 +52,7 @@ public class LogbookAddPane extends GridPane {
 		addBookButton = new Button("Add book");
 		issueBooks = new Button("Add logbook to db");
 		addBookButton.setOnAction(getListenerForBookAdd(btCreator, list, bookList));
-		issueBooks.setOnAction(getListenerForLogbookAdd(customerTextField, bookList));
+		issueBooks.setOnAction(getListenerForLogbookAdd(customerTextField, bookList, btCreator));
 		/*
 		 * addButton = new Button("Add to database"); handler = new
 		 * AddLibrarianHandler(whatToAddComboBox, nameTextField, loginTextField,
@@ -86,7 +86,7 @@ public class LogbookAddPane extends GridPane {
 		return handler;
 	}
 
-	private EventHandler<ActionEvent> getListenerForLogbookAdd(TextField customer, ObservableList<BookListView> list) {
+	private EventHandler<ActionEvent> getListenerForLogbookAdd(TextField customer, ObservableList<BookListView> list, BookTableCreator btCreator) {
 		EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -96,7 +96,6 @@ public class LogbookAddPane extends GridPane {
 				for (int i = 0; i < 10; i++) {
 					code += "" + rnd.nextInt(9) + "";
 				}
-				int codede = Integer.parseInt(code);
 				for (BookListView bookListView : list) {
 					try {
 						DBConnector connection = new DBConnector();
@@ -105,7 +104,9 @@ public class LogbookAddPane extends GridPane {
 						stmt.executeUpdate(
 								"INSERT INTO LOGBOOK(book_id, librarian_id, customer_id, individual_code) VALUES("
 										+ bookListView.getId() + "," + "2," + "(SELECT create_or_get_customer_id('"
-										+ customerStr + "'))," + codede++ + ");");
+										+ customerStr + "'))," + code + ");");
+						
+						stmt.executeUpdate("UPDATE book SET is_taken_flag = 'true' where id = " + + bookListView.getId() + ";");
 						stmt.close();
 						c.commit();
 						c.close();
@@ -115,7 +116,11 @@ public class LogbookAddPane extends GridPane {
 						System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
 					}
 				}
-
+				//123
+				btCreator.getDataTable().setItems(btCreator.getData(true));
+				customerTextField.clear();
+				list.clear();
+				bookList.clear();
 			}
 		};
 		return handler;

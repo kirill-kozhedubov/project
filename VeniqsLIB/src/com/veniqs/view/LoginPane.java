@@ -40,33 +40,6 @@ public class LoginPane extends Stage {
 		errorLabel.getStyleClass().add("error");
 		HBox errorBox = new HBox(errorLabel);
 		
-		
-		
-		//!TODO DELETE THIS SHIT!
-		@Deprecated Button asAdmin = new Button("Admin");
-		@Deprecated Button asLibrarian = new Button("Librarian");
-		errorBox.getChildren().addAll(asAdmin, asLibrarian);
-		asAdmin.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			@Deprecated public void handle(ActionEvent event) {
-				// TODO DELETE THIS SHIT
-				AdminPane.getInstance();
-				//LoginPanel.INSTANCE.close();
-			}
-		});
-		asLibrarian.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			@Deprecated public void handle(ActionEvent event) {
-				// TODO DELETE THIS SHIT
-				LibrarianPane.getInstance(null);
-				//LoginPanel.INSTANCE.close();
-			}
-		});
-		//!TODO DELETE THIS SHIT!
-		
-		
 
 		// button
 		Button signInButton = new Button("Sign in");

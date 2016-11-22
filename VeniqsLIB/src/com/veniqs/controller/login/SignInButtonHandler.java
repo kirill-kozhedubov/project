@@ -42,14 +42,8 @@ public class SignInButtonHandler implements EventHandler<ActionEvent> {
 	private void getLoginStatus(String username, String password) {
 		Librarian lib = regularLoginCheck(username, password);
 		if (lib != null) {
-			if (lib.getLogin().equalsIgnoreCase("admin")) {
 				AdminPane.getInstance();
 				LoginPane.INSTANCE.close();
-			} else {
-				LibrarianPane.getInstance(lib);
-				LoginPane.INSTANCE.close();
-			}
-
 		} else {
 			popError();
 		}

@@ -31,7 +31,7 @@ public class LibrarianTableCreator implements TableCreator {
 
 		TableColumn nameCol = new TableColumn("Full Name");
 		nameCol.setCellValueFactory(new PropertyValueFactory<LibrarianTableModel, String>("fullName"));
-		nameCol.setPrefWidth(150);
+		nameCol.setPrefWidth(250);
 		
 		TableColumn loginCol = new TableColumn("Login");
 		loginCol.setCellValueFactory(new PropertyValueFactory<LibrarianTableModel, String>("login"));
@@ -43,7 +43,7 @@ public class LibrarianTableCreator implements TableCreator {
 
 		// set columbs
 		dataTable.getColumns().setAll(idCol, nameCol, loginCol, passwordCol);
-		dataTable.setPrefWidth(500);
+		dataTable.setPrefWidth(600);
 		dataTable.setPrefHeight(300);
 
 		dataTable.setItems(dataList);

@@ -80,7 +80,7 @@ public class AdminPane extends Stage {
 		WhatToAddHandler whatToAddHandler = new WhatToAddHandler(whatToAddBox, underTopPane, botHBox);
 		whatToAddBox.getSelectionModel().selectedItemProperty().addListener(whatToAddHandler);
 
-		scene = new Scene(root, 500, 800);
+		scene = new Scene(root, 600, 800);
 		this.setResizable(false);
 		this.setScene(scene);
 		this.setTitle("Admin pane");
