@@ -1,10 +1,14 @@
 package com.veniqs.controller.admin;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 
+import com.veniqs.controller.db.DBConnector;
 import com.veniqs.controller.librarian.BookTableCreator;
 import com.veniqs.model.Book;
-
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,12 +94,28 @@ public class LogbookAddPane extends GridPane {
 				Random rnd = new Random();
 				String code = "";
 				for (int i = 0; i < 10; i++) {
-					code += "" + rnd.nextInt(9) + "";	
+					code += "" + rnd.nextInt(9) + "";
 				}
+				int codede = Integer.parseInt(code);
 				for (BookListView bookListView : list) {
-					
+					try {
+						DBConnector connection = new DBConnector();
+						Connection c = connection.getConnection();
+						Statement stmt = c.createStatement();
+						stmt.executeUpdate(
+								"INSERT INTO LOGBOOK(book_id, librarian_id, customer_id, individual_code) VALUES("
+										+ bookListView.getId() + "," + "2," + "(SELECT create_or_get_customer_id('"
+										+ customerStr + "'))," + codede++ + ");");
+						stmt.close();
+						c.commit();
+						c.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
+					}
 				}
-				
+
 			}
 		};
 		return handler;

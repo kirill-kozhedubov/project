@@ -66,6 +66,10 @@ public class TableViewPane extends HBox {
 			System.out.println("Logbook chosen");
 			tableCreator = new BookTableCreator();
 			break;
+		case "Logbook update":
+			System.out.println("Logbook update chosen");
+			
+			break;
 		}
 
 		return tableCreator.getTable();

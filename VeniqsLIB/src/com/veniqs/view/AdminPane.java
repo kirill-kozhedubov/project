@@ -39,19 +39,16 @@ public class AdminPane extends Stage {
 	private BorderPane root;
 	private Scene scene;
 	private SplitPane rootSplitPane;
-	
-	//top
+
+	// top
 	private StackPane topPane;
 	private VBox underTopPane;
 	private ComboBox<String> whatToAddBox;
-	
-	//bot
+
+	// bot
 	private StackPane botPane;
 	private TableView tv;
 	HBox botHBox;
-	
-
-
 
 	private AdminPane() {
 
@@ -76,18 +73,14 @@ public class AdminPane extends Stage {
 		topPane.getChildren().addAll(topVBox);
 		topPane.setPadding(new Insets(10));
 
-
-		
-		//bot pane
+		// bot pane
 		botHBox = new HBox();
 		botPane.getChildren().add(botHBox);
-		
-		
 
 		WhatToAddHandler whatToAddHandler = new WhatToAddHandler(whatToAddBox, underTopPane, botHBox);
 		whatToAddBox.getSelectionModel().selectedItemProperty().addListener(whatToAddHandler);
-		
-		scene = new Scene(root, 1000, 800);
+
+		scene = new Scene(root, 500, 800);
 		this.setResizable(false);
 		this.setScene(scene);
 		this.setTitle("Admin pane");
@@ -105,6 +98,7 @@ public class AdminPane extends Stage {
 		options.add("Book");
 		options.add("Librarian");
 		options.add("Logbook");
+		options.add("Logbook update");
 		return options;
 	}
 

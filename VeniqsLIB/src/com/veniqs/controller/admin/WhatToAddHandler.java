@@ -57,17 +57,19 @@ public class WhatToAddHandler implements ChangeListener<String> {
 			System.out.println("Librarian chosen");
 			clearListAndAddPane(new LibrarianAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
-
 		case "Logbook":
 			System.out.println("Logbook chosen");
 			HBox hb = new HBox();
+			botPane.getChildren().clear();
 			botPane.getChildren().add(hb);
 			//hb.getChildren().add(e);
 			BookTableCreator btc = TableViewPane.getBtc();
 			clearListAndAddPane(new LogbookAddPane(btc));
 			hb.getChildren().add(btc.getDataTable());
 			break;
-
+		case "Logbook update":
+			
+			break;
 		default:
 			break;
 		}
