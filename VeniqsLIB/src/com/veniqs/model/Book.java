@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Book {
+
+
 	private SimpleIntegerProperty id;
 	private SimpleStringProperty title;
 	private SimpleStringProperty language;
@@ -36,5 +38,11 @@ public class Book {
 
 	public int getPublicationDate() {
 		return publicationDate.get();
+	}
+	
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", language=" + language + ", publisher=" + publisher
+				+ ", publicationDate=" + publicationDate + "]";
 	}
 }

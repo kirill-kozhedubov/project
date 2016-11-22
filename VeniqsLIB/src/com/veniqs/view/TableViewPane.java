@@ -13,9 +13,22 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 
 public class TableViewPane extends HBox {
+	Node table;
 
 	public TableViewPane(String type) {
-		this.getChildren().add(getTable(type));
+		table = getTable(type);
+		this.getChildren().add(table);
+	}
+
+	public static BookTableCreator getBtc() {
+		return new BookTableCreator();
+	}
+	
+	
+	
+	
+	public Node getTable() {
+		return table;
 	}
 
 	private Node getTable(String type) {
@@ -49,7 +62,10 @@ public class TableViewPane extends HBox {
 			System.out.println("Librarian chosen");
 			tableCreator = new LibrarianTableCreator();
 			break;
-
+		case "Logbook":
+			System.out.println("Logbook chosen");
+			tableCreator = new BookTableCreator();
+			break;
 		}
 
 		return tableCreator.getTable();

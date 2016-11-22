@@ -9,29 +9,18 @@ import com.veniqs.controller.db.DBConnector;
 import com.veniqs.model.Book;
 import com.veniqs.model.Book;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class BookTableCreator implements TableCreator {
+public class LogbookTableCreator implements TableCreator {
 
 	private TableView<Book> dataTable;
 	private ObservableList<Book> dataList;
-	private Book selectedBook;
 
-	public TableView<Book> getDataTable() {
-		return dataTable;
-	}
-
-	public Book getSelectedBook() {
-		return selectedBook;
-	}
-
-	public BookTableCreator() {
+	public LogbookTableCreator() {
 		// create table + set items
 		dataList = getData();
 		dataTable = new TableView<Book>();
@@ -63,23 +52,9 @@ public class BookTableCreator implements TableCreator {
 		dataTable.setPrefHeight(300);
 
 		dataTable.setItems(dataList);
-		dataTable.getSelectionModel().selectedItemProperty().addListener(getListener());
 
 		// dataTable.getSelectionModel().selectedIndexProperty().addListener(new
 		// RowSelectChangeListener());
-	}
-
-	private ChangeListener<Book> getListener() {
-		ChangeListener<Book> listener = new ChangeListener<Book>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
-				selectedBook = newValue;
-				//System.out.println(getSelectedBook());
-			}
-		};
-
-		return listener;
 	}
 
 	private ObservableList<Book> getData() {

@@ -1,11 +1,14 @@
 package com.veniqs.controller.admin;
 
+import com.veniqs.controller.librarian.BookTableCreator;
+import com.veniqs.model.Book;
 import com.veniqs.view.AdminPane;
 import com.veniqs.view.TableViewPane;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -28,40 +31,47 @@ public class WhatToAddHandler implements ChangeListener<String> {
 		switch (newVal) {
 		case "Publisher":
 			System.out.println("Publisher chosen");
-			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
 		case "Author":
 			System.out.println("Author chosen");
-			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
 		case "Language":
 			System.out.println("Language chosen");
-			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
 		case "Genre":
 			System.out.println("Genre chosen");
-			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
 		case "Customer":
 			System.out.println("Customer chosen");
-			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));
+			clearListAndAddPane(new OnlyNameAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
 		case "Book":
 			System.out.println("Book chosen");
-			clearListAndAddPane(new BookAddPane(whatToAddBox));
+			clearListAndAddPane(new BookAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
 		case "Librarian":
 			System.out.println("Librarian chosen");
-			clearListAndAddPane(new LibrarianAddPane(whatToAddBox));
+			clearListAndAddPane(new LibrarianAddPane(whatToAddBox));clearListAndAddPaneTables(newVal);
 			break;
-		/*
-		 * case "Logbook": System.out.println("Logbook chosen");
-		 * clearListAndAddPane(null); break;
-		 */
+
+		case "Logbook":
+			System.out.println("Logbook chosen");
+			HBox hb = new HBox();
+			botPane.getChildren().add(hb);
+			//hb.getChildren().add(e);
+			BookTableCreator btc = TableViewPane.getBtc();
+			clearListAndAddPane(new LogbookAddPane(btc));
+			hb.getChildren().add(btc.getDataTable());
+			break;
+
 		default:
 			break;
 		}
-		clearListAndAddPaneTables(newVal);
+		
 	}
 
 	private void clearListAndAddPaneTables(String type) {

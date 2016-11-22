@@ -104,7 +104,7 @@ public class AdminPane extends Stage {
 		options.add("Customer");
 		options.add("Book");
 		options.add("Librarian");
-		/*options.add("Logbook");*/
+		options.add("Logbook");
 		return options;
 	}
 
