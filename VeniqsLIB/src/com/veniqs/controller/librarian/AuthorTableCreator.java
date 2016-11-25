@@ -6,8 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.veniqs.controller.db.DBConnector;
+import com.veniqs.model.Book;
 import com.veniqs.model.BookAuthor;
+import com.veniqs.model.BookGenre;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -22,6 +26,8 @@ public class AuthorTableCreator implements TableCreator{
 	private TableColumn<BookAuthor, Integer> colID;
 	private TableColumn<BookAuthor, String> colName;
 
+	private BookAuthor selectedAuthor;
+	
 	public AuthorTableCreator() {
 		// create table + set items
 		dataList = getData();
@@ -40,20 +46,65 @@ public class AuthorTableCreator implements TableCreator{
 		dataTable.getColumns().setAll(idCol, nameCol);
 		dataTable.setPrefWidth(600);
 		dataTable.setPrefHeight(300);
-
+	
 		dataTable.setItems(dataList);
-
-		// dataTable.getSelectionModel().selectedIndexProperty().addListener(new
-		// RowSelectChangeListener());
+		dataTable.getSelectionModel().selectedItemProperty().addListener(getListener());
+		
 	}
+	public BookAuthor getSelectedAuthor() {
+		return selectedAuthor;
+	}
+	
+	public TableView<BookAuthor> getDataTable(String str) {
+		dataTable.setItems(getData(str));
+		return dataTable;
+	}
+	
+	private ChangeListener<BookAuthor> getListener() {
+		ChangeListener<BookAuthor> listener = new ChangeListener<BookAuthor>() {
 
-	private ObservableList<BookAuthor> getData() {
+			@Override
+			public void changed(ObservableValue<? extends BookAuthor> observable, BookAuthor oldValue, BookAuthor newValue) {
+				selectedAuthor = newValue;
+			}
+		};
+
+		return listener;
+	}
+	public  ObservableList<BookAuthor> getData() {
 		ObservableList<BookAuthor> data = FXCollections.observableArrayList();
 		try {
 			DBConnector connection = new DBConnector();
 			Connection c = connection.getConnection();
 			Statement stmt = c.createStatement();
 			String query = "SELECT * FROM book_author;";
+			stmt.executeQuery(query);
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("full_name");
+				BookAuthor ap = new BookAuthor(id, name);
+				data.add(ap);
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
+		}
+
+		return data;
+	}
+	
+	public  ObservableList<BookAuthor> getData(String full_name) {
+		ObservableList<BookAuthor> data = FXCollections.observableArrayList();
+		try {
+			DBConnector connection = new DBConnector();
+			Connection c = connection.getConnection();
+			Statement stmt = c.createStatement();
+			String query = "SELECT * FROM book_author where full_name LIKE '%" + full_name + "%';";
 			stmt.executeQuery(query);
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {

@@ -5,6 +5,11 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class BookGenre {
 
+	@Override
+	public String toString() {
+		return "BookGenre [id=" + id + ", name=" + name + "]";
+	}
+
 	private SimpleIntegerProperty id;
 	private SimpleStringProperty  name;
 

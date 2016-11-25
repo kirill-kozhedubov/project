@@ -6,8 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.veniqs.controller.db.DBConnector;
+import com.veniqs.model.Book;
 import com.veniqs.model.Customer;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -22,6 +25,7 @@ public class CustomerTableCreator implements TableCreator{
 	private TableColumn<Customer, Integer> colID;
 	private TableColumn<Customer, String> colName;
 
+	private Customer selectedCustomer;
 	public CustomerTableCreator() {
 		// create table + set items
 		dataList = getData();
@@ -42,12 +46,27 @@ public class CustomerTableCreator implements TableCreator{
 		dataTable.setPrefHeight(300);
 
 		dataTable.setItems(dataList);
-
-		// dataTable.getSelectionModel().selectedIndexProperty().addListener(new
-		// RowSelectChangeListener());
+		dataTable.getSelectionModel().selectedItemProperty().addListener(getListener());
+		
 	}
+	
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+	
+	private ChangeListener<Customer> getListener() {
+		ChangeListener<Customer> listener = new ChangeListener<Customer>() {
 
-	private ObservableList<Customer> getData() {
+			@Override
+			public void changed(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
+				selectedCustomer = newValue;
+			}
+		};
+
+		return listener;
+	}
+	
+	public ObservableList<Customer> getData() {
 		ObservableList<Customer> data = FXCollections.observableArrayList();
 		try {
 			DBConnector connection = new DBConnector();

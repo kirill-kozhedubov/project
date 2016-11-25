@@ -220,7 +220,7 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 
 	private void addGenresToBook(int bookID) {
 		for (TextField textField : genre) {
-			if (textField.getText() != null && textField.getText() != "") {
+			if (!textField.getText().trim().isEmpty()) {
 				int genreID = 0;
 				try {
 					DBConnector connection = new DBConnector();
@@ -243,6 +243,7 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 					stmt.close();
 					c.commit();
 					c.close();
+					System.out.println("added genre " + textField.getText() + " to book " + bookID);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -255,7 +256,7 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 
 	private void addAuthorsToBook(int bookID) {
 		for (TextField textField : author) {
-			if (textField.getText() != null && textField.getText() != "") {
+			if (!textField.getText().trim().isEmpty()) {
 				int authorID = 0;
 				try {
 					DBConnector connection = new DBConnector();
@@ -275,6 +276,7 @@ class AddBookHandler implements EventHandler<ActionEvent> {
 					stmt.close();
 					c.commit();
 					c.close();
+					System.out.println("added author " + textField.getText() + " to book " + bookID);
 				} catch (SQLException e) {
 					e.printStackTrace();
 					System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());

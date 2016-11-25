@@ -7,6 +7,12 @@ import javafx.beans.property.SimpleStringProperty;
 public class Book {
 
 
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", language=" + language + ", publisher=" + publisher
+				+ ", publicationDate=" + publicationDate + ", isTaken=" + isTaken + "]";
+	}
+
 	private SimpleIntegerProperty id;
 	private SimpleStringProperty title;
 	private SimpleStringProperty language;

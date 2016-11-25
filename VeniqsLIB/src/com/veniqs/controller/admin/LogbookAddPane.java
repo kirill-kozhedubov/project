@@ -9,6 +9,8 @@ import java.util.Random;
 import com.veniqs.controller.db.DBConnector;
 import com.veniqs.controller.librarian.BookTableCreator;
 import com.veniqs.model.Book;
+import com.veniqs.model.Librarian;
+import com.veniqs.view.LibrarianPane;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -86,7 +88,8 @@ public class LogbookAddPane extends GridPane {
 		return handler;
 	}
 
-	private EventHandler<ActionEvent> getListenerForLogbookAdd(TextField customer, ObservableList<BookListView> list, BookTableCreator btCreator) {
+	private EventHandler<ActionEvent> getListenerForLogbookAdd(TextField customer, ObservableList<BookListView> list,
+			BookTableCreator btCreator) {
 		EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -98,15 +101,21 @@ public class LogbookAddPane extends GridPane {
 				}
 				for (BookListView bookListView : list) {
 					try {
+						Librarian lib = LibrarianPane.libr;
+						System.out.println("lib = " + lib);
+						String libid = lib == null ? "2" : "(SELECT id from librarian where login = '" + lib.getLogin() + "')";
+						System.out.println("libid = " + libid);
 						DBConnector connection = new DBConnector();
 						Connection c = connection.getConnection();
 						Statement stmt = c.createStatement();
 						stmt.executeUpdate(
 								"INSERT INTO LOGBOOK(book_id, librarian_id, customer_id, individual_code) VALUES("
-										+ bookListView.getId() + "," + "2," + "(SELECT create_or_get_customer_id('"
-										+ customerStr + "'))," + code + ");");
-						
-						stmt.executeUpdate("UPDATE book SET is_taken_flag = 'true' where id = " + + bookListView.getId() + ";");
+										+ bookListView.getId() + "," + libid + ","
+														+ "(SELECT create_or_get_customer_id('" + customerStr + "')),"
+														+ code + ");");
+
+						stmt.executeUpdate(
+								"UPDATE book SET is_taken_flag = 'true' where id = " + +bookListView.getId() + ";");
 						stmt.close();
 						c.commit();
 						c.close();
@@ -116,7 +125,7 @@ public class LogbookAddPane extends GridPane {
 						System.out.println("ОШИБКА " + e.getClass().getName() + ": " + e.getMessage());
 					}
 				}
-				//123
+				// 123
 				btCreator.getDataTable().setItems(btCreator.getData(true));
 				customerTextField.clear();
 				list.clear();
